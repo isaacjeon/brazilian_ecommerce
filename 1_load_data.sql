@@ -150,8 +150,11 @@ INTO TABLE sellers
 FIELDS TERMINATED BY ','
 ENCLOSED BY '"'
 LINES TERMINATED BY '\n'
-IGNORE 1 LINES;
-
+IGNORE 1 LINES
+-- Replace certain Unicode characters that aren't supported by ASCII
+SET 
+  seller_city = REPLACE(REPLACE(seller_city, '´', ''''), 'ã', 'a');
+  
 LOAD DATA LOCAL INFILE 'product_category_name_translation.csv'
 INTO TABLE product_category_name_translation
 FIELDS TERMINATED BY ','
