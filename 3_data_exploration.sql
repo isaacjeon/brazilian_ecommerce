@@ -17,36 +17,38 @@ SELECT * FROM payments_staging;
 
 -- EDA
 
--- Distribution summaries for order_total
+-- Distribution summaries for order_staging
 SELECT
 	COUNT(order_id) AS order_count,
     COUNT(DISTINCT customer_unique_id) AS unique_customer_count,
-	ROUND(AVG(order_total), 2) AS average,
-    MIN(order_total) AS min,
-    MAX(order_total) AS max,
-    ROUND(STDDEV(order_total), 2) AS std_dev
+	ROUND(AVG(order_total), 2) AS average_total,
+    MIN(order_total) AS min_total,
+    MAX(order_total) AS max_total,
+    ROUND(STDDEV(order_total), 2) AS std_dev,
+    ROUND(AVG(review_score), 2) as avg_review_score
 FROM orders_temp;
 
--- Get unique customers with order counts > 1
-SELECT
-	customer_unique_id,
-	MIN(customer_city) AS city,
-	MIN(customer_state) AS state,
-    COUNT(*) AS order_count
+-- Get the number of unique customers that made a specific amount of orders
+WITH customer_order_counts AS (
+SELECT COUNT(*) AS order_count
 FROM orders_temp
 GROUP BY customer_unique_id
-HAVING order_count > 1
-ORDER BY order_count DESC;
+)
+SELECT order_count, COUNT(*) AS num_customers
+FROM customer_order_counts
+GROUP BY order_count
+ORDER BY order_count;
 
 -- Monthly distribution summaries for order_total
 SELECT
 	DATE_FORMAT(purchased_on, '%Y-%m') AS month,
 	COUNT(*) AS order_count,
     SUM(order_total) AS total,
-	ROUND(AVG(order_total), 2) AS average,
-    MIN(order_total) AS min,
-    MAX(order_total) AS max,
-    ROUND(STDDEV(order_total), 2) AS std_dev
+	ROUND(AVG(order_total), 2) AS average_total,
+    MIN(order_total) AS min_total,
+    MAX(order_total) AS max_total,
+    ROUND(STDDEV(order_total), 2) AS std_dev,
+    ROUND(AVG(review_score), 2) as avg_review_score
 FROM orders_temp
 GROUP BY month
 ORDER BY month;
@@ -130,7 +132,7 @@ GROUP BY order_id
 )
 SELECT
     same_city_shipping, same_state_shipping,
-	ROUND(AVG(review_score), 2),
+	ROUND(AVG(review_score), 2) AS avg_review_score,
     ROUND(AVG(DATEDIFF(DATE(delivered_customer_date), DATE(purchased_on))), 2) AS avg_days_to_deliver,
 	ROUND(AVG(DATEDIFF(DATE(delivered_carrier_date), DATE(shipping_limit_date))), 2) AS avg_carrier_delivery_delay_days,
 	ROUND(AVG(DATEDIFF(DATE(delivered_customer_date), DATE(estimated_delivery_date))), 2) AS avg_customer_delivery_delay_days
@@ -160,6 +162,18 @@ JOIN seller_locs
 ON customer_city = seller_city
 AND customer_state != seller_state
 ORDER BY seller_state, seller_city;
+
+-- Total, average, and max number of items purchased per order
+SELECT
+    SUM(qty_purchased) as total_qty_purchased,
+    ROUND(AVG(qty_purchased), 2) as avg_qty_purchased,
+	MAX(qty_purchased) as max_qty_purchased
+FROM (
+	-- Get total number of items purchased for each order
+	SELECT SUM(qty) as qty_purchased
+	FROM items_temp
+    GROUP BY order_id
+    ) i;
     
 -- Monthly total, average, and max number of items purchased per order
 SELECT
@@ -221,7 +235,7 @@ SELECT p.state, p.total_qty_purchased, s.total_qty_sold
 FROM total_purchased p
 JOIN total_sold s
 ON p.state = s.state
-ORDER BY p.state;
+ORDER BY total_qty_purchased DESC, total_qty_sold DESC;
 
 -- Top 3 (or more in case of ties) purchased product_category by customer_state
 WITH ranked_categories AS (
@@ -253,17 +267,10 @@ FROM ranked_categories
 WHERE category_rank <= 3
 ORDER BY seller_state, category_rank;
 
--- Average number of payment types used in each order
-SELECT ROUND(AVG(num_payment_types), 2) AS avg_num_payment_types
-FROM (
-	SELECT order_id, COUNT(*) AS num_payment_types
-    FROM payments_temp
-    GROUP BY order_id
-) t;
-
--- Average, min, and max payment_type and num_installments for each payment_type
+-- Distribution values for each payment_type
 SELECT
 	payment_type,
+    COUNT(DISTINCT order_id) as order_count,
 	ROUND(AVG(payment_value), 2) AS avg_pay_val,
     MIN(payment_value) AS min_pay_val,
     MAX(payment_value) AS max_pay_val,
@@ -271,7 +278,17 @@ SELECT
     MIN(num_installments) AS min_num_installments,
     MAX(num_installments) AS max_num_installments
 FROM payments_temp
-GROUP BY payment_type;
+GROUP BY payment_type
+ORDER BY order_count DESC;
+
+-- Average number of payment options used in each order (different payment options of the same type are counted separately
+-- e.g. two different credit cards used in the same order has num_payment_options = 2)
+SELECT ROUND(AVG(num_payment_options), 2) AS avg_num_payment_options
+FROM (
+	SELECT order_id, COUNT(*) AS num_payment_options
+    FROM payments_temp
+    GROUP BY order_id
+) t;
 
 -- Get rows where payment_type is not_defined or payment_value is 0
 SELECT *
@@ -333,6 +350,7 @@ SELECT *,
 	DATEDIFF(DATE(delivered_carrier_date), DATE(shipping_limit_date)) AS carrier_delivery_delay_days,
 	DATEDIFF(DATE(delivered_customer_date), DATE(estimated_delivery_date)) AS customer_delivery_delay_days
 FROM orders_staging
+WHERE DATE(purchased_on) >= '2017-01-01' AND DATE(purchased_on) <= '2018-08-31'
 ORDER BY purchased_on;
 
 /*
@@ -343,12 +361,13 @@ Note: There seem to be some mistakes with seller_city having the wrong associate
 CREATE VIEW itemized_final AS
 SELECT *
 FROM itemized_staging
+WHERE DATE(purchased_on) >= '2017-01-01' AND DATE(purchased_on) <= '2018-08-31'
 ORDER BY purchased_on;
 
 -- Include rows from payments_staging where payment_value > 0
 CREATE VIEW payments_final AS
 SELECT *
 FROM payments_staging
-WHERE payment_value > 0;
-
-SELECT * FROM items_temp;
+WHERE payment_value > 0
+-- Only include orders between specified dates
+AND order_id IN (SELECT order_id FROM orders_final);
