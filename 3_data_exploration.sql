@@ -102,6 +102,7 @@ GROUP BY order_id
 )
 SELECT
 	o.order_id, order_status, review_score,
+	DATEDIFF(DATE(delivered_carrier_date), DATE(purchased_on)) AS days_to_ship,
     DATEDIFF(DATE(delivered_customer_date), DATE(purchased_on)) AS days_to_deliver,
 	DATEDIFF(DATE(delivered_carrier_date), DATE(shipping_limit_date)) AS carrier_delivery_delay_days,
 	DATEDIFF(DATE(delivered_customer_date), DATE(estimated_delivery_date)) AS customer_delivery_delay_days,
@@ -113,6 +114,7 @@ ON o.order_id = s.order_id;
 -- Get averages for days_to_deliver and delivery delays grouped by review_score (1 through 5)
 SELECT
 	review_score,
+	ROUND(AVG(DATEDIFF(DATE(delivered_carrier_date), DATE(purchased_on))), 2) AS avg_days_to_ship,
     ROUND(AVG(DATEDIFF(DATE(delivered_customer_date), DATE(purchased_on))), 2) AS avg_days_to_deliver,
 	ROUND(AVG(DATEDIFF(DATE(delivered_carrier_date), DATE(shipping_limit_date))), 2) AS avg_carrier_delivery_delay_days,
 	ROUND(AVG(DATEDIFF(DATE(delivered_customer_date), DATE(estimated_delivery_date))), 2) AS avg_customer_delivery_delay_days
@@ -133,6 +135,7 @@ GROUP BY order_id
 SELECT
     same_city_shipping, same_state_shipping,
 	ROUND(AVG(review_score), 2) AS avg_review_score,
+	ROUND(AVG(DATEDIFF(DATE(delivered_carrier_date), DATE(purchased_on))), 2) AS avg_days_to_ship,
     ROUND(AVG(DATEDIFF(DATE(delivered_customer_date), DATE(purchased_on))), 2) AS avg_days_to_deliver,
 	ROUND(AVG(DATEDIFF(DATE(delivered_carrier_date), DATE(shipping_limit_date))), 2) AS avg_carrier_delivery_delay_days,
 	ROUND(AVG(DATEDIFF(DATE(delivered_customer_date), DATE(estimated_delivery_date))), 2) AS avg_customer_delivery_delay_days
@@ -346,6 +349,7 @@ GROUP BY customer_state;
 -- Add columns for days_to_deliver, carrier_delivery_delay_days, and customer_delivery_delay_days to orders_staging
 CREATE VIEW orders_final AS
 SELECT *,
+    DATEDIFF(DATE(delivered_carrier_date), DATE(purchased_on)) AS days_to_ship,
     DATEDIFF(DATE(delivered_customer_date), DATE(purchased_on)) AS days_to_deliver,
 	DATEDIFF(DATE(delivered_carrier_date), DATE(shipping_limit_date)) AS carrier_delivery_delay_days,
 	DATEDIFF(DATE(delivered_customer_date), DATE(estimated_delivery_date)) AS customer_delivery_delay_days
