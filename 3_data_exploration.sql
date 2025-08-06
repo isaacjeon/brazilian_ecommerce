@@ -375,3 +375,10 @@ FROM payments_staging
 WHERE payment_value > 0
 -- Only include orders between specified dates
 AND order_id IN (SELECT order_id FROM orders_final);
+
+-- Query each view
+SELECT * FROM orders_final;
+
+SELECT * FROM itemized_final;
+
+SELECT * FROM payments_final;
