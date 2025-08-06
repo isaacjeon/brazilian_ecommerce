@@ -10,8 +10,9 @@ This project explores the **Brazilian E-Commerce Public Dataset by Olist** from 
    - `1_load_data.sql`
    - `2_create_views.sql`
    - `3_data_exploration`
-4. Tableau Public cannot connect directly to MySQL, so the three views orders_final, itemized_final, and payments_final should be exported as csv files `orders.csv`, `items.csv`, and `payments.csv` respectively. If using MySQL Workbench, this can be done through the Table Data Export Wizard.
-5. 
+4. Tableau Public cannot connect directly to MySQL, so the three views orders_final, itemized_final, and payments_final should be exported as csv files `orders.csv`, `items.csv`, and `payments.csv` respectively.
+   - If using MySQL Workbench, the Table Data Export Wizard should not be used. It automatically assigns default values for NULL values, which is undesirable in the case of numeric values as NULL values will become 0. Instead, the views should be queried without limiting the number of rows and then exported. This isn't the most efficient solution, but it's a fairly simple workaround and the dataset isn't too large so it shouldn't be an issue here.
+6. 
 
 ## Dataset
 
