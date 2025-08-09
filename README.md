@@ -4,6 +4,8 @@ This project explores the **Brazilian E-Commerce Public Dataset by Olist** from 
 
 ## How to Use
 
+The Tableau dashboard may be viewed on [Tableau Public](https://public.tableau.com/views/BrazilianE-Commerce_17547219521680/Dashboard1?:language=en-US&publish=yes&:sid=&:redirect=auth&:display_count=n&:origin=viz_share_link). The following steps may also be taken to use the files in this repository:
+
 1. Download the CSV files from the Kaggle source linked below (`olist_geolocation_dataset.csv` is not used for this project).
 2. Clone the repository
 3. Import data into MySQL and run the sql scripts in the following order:
@@ -12,7 +14,7 @@ This project explores the **Brazilian E-Commerce Public Dataset by Olist** from 
    - `3_data_exploration`
 4. Tableau Public cannot connect directly to MySQL, so the three views orders_final, itemized_final, and payments_final should be exported as csv files `orders.csv`, `items.csv`, and `payments.csv` respectively.
    - If using MySQL Workbench, the Table Data Export Wizard should not be used. It automatically assigns default values for NULL values, which is undesirable in the case of numeric values as NULL values will become 0. Instead, the views should be queried without limiting the number of rows and then exported. This isn't the most efficient solution, but it's a fairly simple workaround and the dataset isn't too large so it shouldn't be an issue here.
-6. 
+5. Load the `Brazilian E-Commerce.twb` Tableau file (it was created using Tableau Public), and connect to the three CSV files created in the previous step.
 
 ## Dataset
 
@@ -55,9 +57,7 @@ It includes multiple CSV files representing different entities in the e-commerce
 ### Data Visualization with Tableau
 
 - Connected Tableau to SQL views.
-- Created interactive dashboards including:
-  ...
-  ...
+- Created interactive dashboards for analysis of order counts, sales totals, review scores, shipping and delivery times, and payment options.
 
 ## Key Insights
 
