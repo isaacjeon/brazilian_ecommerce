@@ -1,6 +1,6 @@
 # Brazilian E-Commerce Data Analysis Project
 
-This project explores the **Brazilian E-Commerce Public Dataset by Olist** from Kaggle, utilizing **MySQL** for data structuring, cleaning, and exploratory data analysis (EDA), and **Tableau** for building interactive dashboards.
+This project explores the **Brazilian E-Commerce Public Dataset by Olist** from Kaggle, involving order data such as customer, seller, date, location, item, and payment information. It utilizes **MySQL** for data structuring, cleaning, and exploratory data analysis (EDA), and **Tableau** for building interactive dashboards. 
 
 ## How to Use
 
