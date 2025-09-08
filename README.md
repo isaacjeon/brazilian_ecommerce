@@ -68,28 +68,29 @@ It includes multiple CSV files representing different entities in the e-commerce
    - Most customers are likely placing small-to-mid-sized orders, but there are a few very large orders that could point to bulk buyers or high-value items being sold occasionally.
 - Customers purchased, on average, 1.14 items per order.
 - The state of Sao Paulo had the highest number orders at 41746, or 42.0% of all orders. It also had the lowest average order total of BRL 143.12. suggesting a pattern of frequent but smaller purchases compared to other states.
+
+### Product Categories
 - The single product with the largest qty sold was in the furniture_decor category at 527 units sold (within 431 distinct orders), while the product that was sold in the largest number of distinct orders was in the bed_bath_table category at 467 orders (with 488 total units sold).
 - The category with the largest qty sold is bed_bath_table at 11115 units sold, followed by health_beauty at 9670 units, sports_leisure at 8641 units, and furniture_decor at 8334 units sold.
    - The top product categories suggest customers primarily purchase home, personal care, and lifestyle products.
-   - While bed_bath_table leads in number of sales, there is not a huge difference compared to other top categories indicating a diversity in product demand.
-- The state of Sao Paulo (SP) had the most units of products purchased by customers and sold by sellers.
-   - The second and third states with the largest total_qty_purchased are Rio de Janeiro (RJ) and Minas Gerais (MG) with 14579 and 13129 units purchased respectively.
-   - The second and third states with the largest total_qty_sold are Minas Gerais and Paraiba (PR) with 8827 and 8671 units sold respectively.
-- The average review score is 4.09 out of 5, indicating decent levels of customer satisfaction but also room for improvement.
-
-### Order Ful
-- Out of all orders, 609 were unavailable and 314 were canceled, suggesting about 1% of orders were unable to be fulfilled.
-- Review score seems correlated with the number of days between purchase and delivery and delays in the shipping and delivery process.
-   - Orders that received a scores of 5 took 10.62 days on average to deliver, and orders that received scores of 1 took twice the amount of time at 21.28 days on average.
-   - Orders that received a scores of 5 arrived on average 13.38 days earlier than the estimated delivery date, while orders that received scores of 1 arrived on averaged 4.03 days earlier possibly implying more frequent and/or severe delays.
-   - Similarly, orders that received higher scores tended to have the seller send the item to the carrier earlier.
-   - The takeaway is that longer shipping times and delays may lead to negative review scores. While carrier delays may be unavoidable, the seller might improve customer satisfaction by taking measures to send out items to the carrier as soon as possible.
-- Orders when the customer and seller are located in the same city arrive, as expected, earlier on average than when they are located in different cities. Similarly, the same could be said when they are located in the same state compared to when they are in different states.
-   - Review scores are also slightly higher when deliveries are within the same city/state compared to different cities/states.
-   - Surprisingly, however, there are less delays for out-of-state deliveries compared to in-state deliveries, and less delays for out-of-city deliveries compared to same-city deliveries. One possible explanation is that there may be much more leeway in estimated shipping times for further delivery destinations.
-- There are a number of seller states that are incorrect for the corresponding city. For example, there are instances where the city is Rio de Janeiro and state is SP (Sao Paulo), when it should be Rio de Janeiro. However, it would require a large amount of time and effort to go through and check for hundreds of different city, state pairs. As this busywork is outside the scope of the project, I will assume that all the location information is correct (although it obviously is not) and keep in mind that normally this information should first be corrected.
+   - While bed_bath_table leads in number of sales, there is not a huge difference compared to other top categories, indicating a diversity in product demand.
  
 ### Analysis of payment types used
 - Of the four payment types (credit card, debit card, boleto, and voucher), credit card usage dominates at 76505 (76.9%) of orders.
    - 27594 (27.7%) of orders paid in more than one installments and the average number of credit card installments was 3.51, highlighting the importance of installment support.
 - The second most used payment type is "boleto" (a Brazilian payment method) at 19784 (19.9%) orders, which also highlights the importance of supporting this payment option.
+
+### Review Scores
+- The average review score is 4.09 out of 5, indicating decent levels of customer satisfaction but also room for improvement.
+- 97.09% of orders were delivered. While 58.84% of delivered orders received a review score of 5, 9.64% of delivered orders received a score of 1.
+   - While the fulfillment rate is high, nearly 1 in 10 delivered orders still receive the lowest rating, indicating potential issues with delivery speed, product condition, or service quality.
+- The number of positive views significantly increased over time, while negative/neutral reviews remained relatively low.
+   - This trend suggests a steady improvement in customer satisfaction.
+   - Negative reviews somewhat spiked around November 2017 and March 2018, which could be potentially be due to the increase in delivery times observed in the data for those periods.
+
+### Delivery Times
+- Review score is strongly correlated with delivery delays.
+   - Orders that received a score of 5 took 10.62 days on average to deliver, and orders that received scores of 1 took twice the amount of time at 21.28 days on average.
+   - Orders that received a score of 5 arrived on average 13.38 days earlier than the estimated delivery date, while orders that received scores of 1 arrived on averaged 4.03 days early.
+   - Similarly, orders that received higher scores tended to have the seller send the item to the carrier earlier.
+ - While delays in delivery to the customer (Customer Delivery Delay) due to the carrier may be unavoidable, the seller may improve customer satisfaction by taking measures to reduce delays in delivery to the carrier (Carrier Delivery Delay) to give carriers more time to deliver the item to the customer.
