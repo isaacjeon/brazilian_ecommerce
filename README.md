@@ -61,17 +61,24 @@ It includes multiple CSV files representing different entities in the e-commerce
 
 ## Key Insights
 
-- There are 99441 orders and 96086 unique customer IDs.
-   - There are 93099 customers who only made a single purchase (assuming the dataset is not a sample of a larger dataset, and there are not any customers with more than one unique customer ID), with 2745 customers with two orders and 203 customers with three orders.
-   - The largest number of orders that a single unique customer made is 17, followed by a customer with 9 orders.
+### Customer Behavior
+- 93099 out of 96086 customers (96.9%) only made a single purchase. 2745 customers made two orders while 242 customers made three or more orders.
+   - Assuming the dataset is not a sample of a larger dataset and there are no customers with more than one unique customer ID, this indicates low customer retention.
 - The average total price of orders is BRL (Brazilian Real) 160.58 ranging from 9.59 to 13664.08, and a standard deviation of 220.46.
-- The average review score is 4.09 out of 5.
-- Out of all orders, 609 were unavailable and 314 were canceled, suggesting about 1% of orders were unable to be fulfilled.
-- The first three and last two months have a very low number of instances. I removed these for the dashboard since they can result in skewed values when aggregating by month.
-- The state of Sao Paulo had the highest number orders at 41746 (a bit less than half of all orders). It also had the lowest average order total of BRL 143.12, implying that there may be many more smaller valued orders compared to other states.
-- Meanwhile, the state of Paraiba had the high average order total of BRL 265.01, although at a lower order count of 536 which may result in higher error.
+   - Most customers are likely placing small-to-mid-sized orders, but there are a few very large orders that could point to bulk buyers or high-value items being sold occasionally.
+- Customers purchased, on average, 1.14 items per order.
+- The state of Sao Paulo had the highest number orders at 41746, or 42.0% of all orders. It also had the lowest average order total of BRL 143.12. suggesting a pattern of frequent but smaller purchases compared to other states.
+- The single product with the largest qty sold was in the furniture_decor category at 527 units sold (within 431 distinct orders), while the product that was sold in the largest number of distinct orders was in the bed_bath_table category at 467 orders (with 488 total units sold).
+- The category with the largest qty sold is bed_bath_table at 11115 units sold, followed by health_beauty at 9670 units, sports_leisure at 8641 units, and furniture_decor at 8334 units sold.
+   - The top product categories suggest customers primarily purchase home, personal care, and lifestyle products.
+   - While bed_bath_table leads in number of sales, there is not a huge difference compared to other top categories indicating a diversity in product demand.
+- The state of Sao Paulo (SP) had the most units of products purchased by customers and sold by sellers.
+   - The second and third states with the largest total_qty_purchased are Rio de Janeiro (RJ) and Minas Gerais (MG) with 14579 and 13129 units purchased respectively.
+   - The second and third states with the largest total_qty_sold are Minas Gerais and Paraiba (PR) with 8827 and 8671 units sold respectively.
+- The average review score is 4.09 out of 5, indicating decent levels of customer satisfaction but also room for improvement.
 
-### Correlations between delivery times with review scores and location
+### Order Ful
+- Out of all orders, 609 were unavailable and 314 were canceled, suggesting about 1% of orders were unable to be fulfilled.
 - Review score seems correlated with the number of days between purchase and delivery and delays in the shipping and delivery process.
    - Orders that received a scores of 5 took 10.62 days on average to deliver, and orders that received scores of 1 took twice the amount of time at 21.28 days on average.
    - Orders that received a scores of 5 arrived on average 13.38 days earlier than the estimated delivery date, while orders that received scores of 1 arrived on averaged 4.03 days earlier possibly implying more frequent and/or severe delays.
@@ -81,18 +88,8 @@ It includes multiple CSV files representing different entities in the e-commerce
    - Review scores are also slightly higher when deliveries are within the same city/state compared to different cities/states.
    - Surprisingly, however, there are less delays for out-of-state deliveries compared to in-state deliveries, and less delays for out-of-city deliveries compared to same-city deliveries. One possible explanation is that there may be much more leeway in estimated shipping times for further delivery destinations.
 - There are a number of seller states that are incorrect for the corresponding city. For example, there are instances where the city is Rio de Janeiro and state is SP (Sao Paulo), when it should be Rio de Janeiro. However, it would require a large amount of time and effort to go through and check for hundreds of different city, state pairs. As this busywork is outside the scope of the project, I will assume that all the location information is correct (although it obviously is not) and keep in mind that normally this information should first be corrected.
-
-### Analysis of itemized orders
-- Customers purchased, on average, 1.14 items per order. The largest order had a quantity of 21.
-- The single product with the largest qty sold was in the furniture_decor category at 527 units sold (within 431 distinct orders), while the product that was sold in the largest number of distinct orders was in the bed_bath_table category at 467 orders (with 488 total units sold).
-- The category with the largest qty sold is bed_bath_table at 11115 units sold, followed by health_beauty at 9670 units, sports_leisure at 8641 units, and furniture_decor at 8334 units sold.
-- The state of Sao Paulo (SP) had the most units of products purchased by customers and sold by sellers.
-   - The second and third states with the largest total_qty_purchased are Rio de Janeiro (RJ) and Minas Gerais (MG) with 14579 and 13129 units purchased respectively.
-   - The second and third states with the largest total_qty_sold are Minas Gerais and Paraiba (PR) with 8827 and 8671 units sold respectively.
-
+ 
 ### Analysis of payment types used
-- Of the four payment types (credit card, debit card, boleto, and voucher), the vast majority of orders was paid (in full or partially) by credit card at 76505 orders. This is followed by 19784 orders paid with boleto, 3866 paid with a voucher, and 1528 paid with debit card.
-- Credit cards involved that largest payment value of BRL 163.32 on average, with voucher involving the lowest at BRL 65.70.
-- Only credit card allows for multiple installments, with an average of 3.51 and max of 24 installments.
-- The average number of payment options used for a single order is 1.04, suggesting that most customers only used one payment type.
-   - Different payment options of the same type are counted separately e.g. two different credit cards used in the same order has num_payment_options = 2
+- Of the four payment types (credit card, debit card, boleto, and voucher), credit card usage dominates at 76505 (76.9%) of orders.
+   - 27594 (27.7%) of orders paid in more than one installments and the average number of credit card installments was 3.51, highlighting the importance of installment support.
+- The second most used payment type is "boleto" (a Brazilian payment method) at 19784 (19.9%) orders, which also highlights the importance of supporting this payment option.
