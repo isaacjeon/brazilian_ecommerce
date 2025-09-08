@@ -1,6 +1,6 @@
 ## SQL Results
 
-### Customer Behavior
+### Customer Orders
 - There are 99441 orders and 96086 unique customer IDs.
   - There are 93099 customers who only made a single purchase (assuming the dataset is not a sample of a larger dataset, and there are not any customers with more than one unique customer ID), with 2745 customers with two orders and 203 customers with three orders.
   - The largest number of orders that a single unique customer made is 17, followed by a customer with 9 orders.
