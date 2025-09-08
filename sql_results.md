@@ -5,13 +5,13 @@
   - There are 93099 customers who only made a single purchase (assuming the dataset is not a sample of a larger dataset, and there are not any customers with more than one unique customer ID), with 2745 customers with two orders and 203 customers with three orders.
   - The largest number of orders that a single unique customer made is 17, followed by a customer with 9 orders.
 - The average total price of orders is BRL (Brazilian Real) 160.58 ranging from 9.59 to 13664.08, and a standard deviation of 220.46.
-- The average review score is 4.09 out of 5.
 - Out of all orders, 609 were unavailable and 314 were canceled, suggesting about 1% of orders were unable to be fulfilled.
 - The first three and last two months have a very low number of instances. I removed these for the dashboard since they can result in skewed values when aggregating by month.
 - The state of Sao Paulo had the highest number orders at 41746 (a bit less than half of all orders). It also had the lowest average order total of BRL 143.12, implying that there may be many more smaller valued orders compared to other states.
 - Meanwhile, the state of Paraiba had the high average order total of BRL 265.01, although at a lower order count of 536 which may result in higher error.
 
 ### Review Scores and Delivery Times
+- The average review score is 4.09 out of 5.
 - Review score seems correlated with the number of days between purchase and delivery and delays in the shipping and delivery process.
   - Orders that received a scores of 5 took 10.62 days on average to deliver, and orders that received scores of 1 took twice the amount of time at 21.28 days on average.
   - Orders that received a scores of 5 arrived on average 13.38 days earlier than the estimated delivery date, while orders that received scores of 1 arrived on averaged 4.03 days earlier possibly implying more frequent and/or severe delays.
