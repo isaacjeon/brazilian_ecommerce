@@ -92,8 +92,12 @@ It includes multiple CSV files representing different entities in the e-commerce
    - Negative reviews somewhat spiked around November 2017 and March 2018, which could be potentially be due to the increase in delivery times observed in the data for those periods.
 
 ### Delivery Times
+- 90.49% of orders arrived by the estimated delivery date, meaning that about 1 out of 10 orders experienced a delay.
 - Review score is strongly correlated with delivery delays.
    - Orders that received a score of 5 took 10.62 days on average to deliver, and orders that received scores of 1 took twice the amount of time at 21.28 days on average.
    - Orders that received a score of 5 arrived on average 13.38 days earlier than the estimated delivery date, while orders that received scores of 1 arrived on averaged 4.03 days early.
-   - Similarly, orders that received higher scores tended to have the seller send the item to the carrier earlier.
- - While delays in delivery to the customer (Customer Delivery Delay) due to the carrier may be unavoidable, the seller may improve customer satisfaction by taking measures to reduce delays in delivery to the carrier (Carrier Delivery Delay) to give carriers more time to deliver the item to the customer.
+- Given the earlier findings that delivery delays correlate with low review scores, improving delivery accuracy could lead to higher customer satisfaction and fewer negative ratings.
+- The seller may improve customer satisfaction by taking measures to send out items to the carrier as soon as possible.
+- There are many cases where, despite the seller sending the item one or two weeks early, the carrier still delivers the item late. Sometimes the item takes months to deliver.
+   - This highlights a key logistics bottleneck in which delays result from carrier inefficiencies rather than seller performance. These delays result in lower review scores even though the seller may not be at fault.
+   - This suggests a need to reevaluate carrier partnerships or improve the accuracy of estimated delivery dates.
