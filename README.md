@@ -65,8 +65,11 @@ It includes multiple CSV files representing different entities in the e-commerce
 - 93099 out of 96086 customers (96.9%) only made a single purchase. 2745 customers made two orders while 242 customers made three or more orders.
    - Assuming the dataset is not a sample of a larger dataset and there are no customers with more than one unique customer ID, this indicates low customer retention.
 - The average total price of orders is BRL (Brazilian Real) 160.58 ranging from 9.59 to 13664.08, and a standard deviation of 220.46.
-   - Most customers are likely placing small-to-mid-sized orders, but there are a few very large orders that could point to bulk buyers or high-value items being sold occasionally.
-- Customers purchased, on average, 1.14 items per order.
+   - Customers purchased, on average, 1.14 items per order.
+   - Most customers seem to be placing small-to-mid-sized orders, but there are a few very large orders that could point to bulk buyers or high-value items being sold occasionally.
+- There is a growth in sales over time, with sales significantly increasing from Fall 2017.
+   - Monthly average order value stayed stable over time.
+   - This suggests that the amount that customers were spending on each order didn't change much over time, and the increase in sales can be attributed to more orders being placed.
 - The state of Sao Paulo had the highest number orders at 41746, or 42.0% of all orders. It also had the lowest average order total of BRL 143.12. suggesting a pattern of frequent but smaller purchases compared to other states.
 
 ### Product Categories
