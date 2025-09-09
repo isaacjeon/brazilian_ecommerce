@@ -1,6 +1,6 @@
 # Brazilian E-Commerce Data Analysis Project
 
-This project explores the **Brazilian E-Commerce Public Dataset by Olist** from Kaggle, involving order data across several dimensions including customer and seller demographics, product categories, payment types, delivery logistics, and review scores. It utilizes **MySQL** for data structuring, cleaning, and exploratory data analysis (EDA), and **Tableau** for building interactive dashboards for visualizing monthly sales performance, regional trends, delivery times, and customer purchasing behavior and satisfaction to uncover operational and marketing insights.
+This project explores the [Brazilian E-Commerce Public Dataset by Olist](https://www.kaggle.com/datasets/olistbr/brazilian-ecommerce) from Kaggle, involving order data across several dimensions including customer and seller demographics, product categories, payment types, delivery logistics, and review scores. It utilizes **MySQL** for data structuring, cleaning, and exploratory data analysis (EDA), and **Tableau** for building interactive dashboards for visualizing monthly sales performance, regional trends, delivery times, and customer purchasing behavior and satisfaction to uncover operational and marketing insights.
 
 ## How to Use
 
@@ -9,16 +9,16 @@ The Tableau dashboard may be viewed on [Tableau Public](https://public.tableau.c
 1. Download the CSV files from the Kaggle source linked below (`olist_geolocation_dataset.csv` is not used for this project).
 2. Clone the repository
 3. Import data into MySQL and run the sql scripts in the following order:
-   - `1_load_data.sql`
-   - `2_create_views.sql`
-   - `3_data_exploration`
+   - [1_load_data.sql](https://github.com/isaacjeon/brazilian_ecommerce/blob/main/1_load_data.sql)
+   - [2_create_views.sql](https://github.com/isaacjeon/brazilian_ecommerce/blob/main/2_create_views.sql)
+   - [3_data_exploration](https://github.com/isaacjeon/brazilian_ecommerce/blob/main/3_data_exploration.sql)
 4. Tableau Public cannot connect directly to MySQL, so the three views orders_final, itemized_final, and payments_final should be exported as csv files `orders.csv`, `items.csv`, and `payments.csv` respectively.
    - If using MySQL Workbench, the Table Data Export Wizard should not be used. It automatically assigns default values for NULL values, which is undesirable in the case of numeric values as NULL values will become 0. Instead, the views should be queried without limiting the number of rows and then exported. This isn't the most efficient solution, but it's a fairly simple workaround and the dataset isn't too large so it shouldn't be an issue here.
 5. Load the `Brazilian E-Commerce.twb` Tableau file (it was created using Tableau Public), and connect to the three CSV files created in the previous step.
 
 ## Dataset
 
-**Source**: [Brazilian E-Commerce Public Dataset by Olist](https://www.kaggle.com/datasets/olistbr/brazilian-ecommerce)
+**Source**: https://www.kaggle.com/datasets/olistbr/brazilian-ecommerce
 
 **Description**:  
 The dataset contains information from 2016 to 2018 about orders made at Olist — a Brazilian online marketplace.
@@ -36,19 +36,19 @@ It includes multiple CSV files representing different entities in the e-commerce
 
 ### Data Preparation and EDA with MySQL
 
-`1_load_data.sql`
+[1_load_data.sql](https://github.com/isaacjeon/brazilian_ecommerce/blob/main/1_load_data.sql)
 - Importing CSVs into MySQL by creating tables and loading csv files.
 - Setting primary and foreign keys.
 - Handling empty values as nulls and setting appropriate data types.
 
-`2_create_views.sql`
+[2_create_views.sql](https://github.com/isaacjeon/brazilian_ecommerce/blob/main/2_create_views.sql)
 - Joining tables and aggregating values to create three SQL Views:
    - a view for each individual order
    - a view for orders at an itemized level (one row per unique product per order)
    - a view for payment types used for each order
 - Initial data transformations (e.g. computing order totals) and handling of null values
 
-`3_data_exploration`
+[3_data_exploration](https://github.com/isaacjeon/brazilian_ecommerce/blob/main/3_data_exploration.sql)
 - Create temporary tables of views for faster queries.
 - Identified key business metrics such average delivery time, order frequency, most popular categories, etc.
 - Aggregated data by key dimensions such as order month, state, and product category to analyze sales trends and delivery performance.
